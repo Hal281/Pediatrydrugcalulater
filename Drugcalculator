@@ -1,0 +1,102 @@
+# Pediatric Drug Dosage Calculator
+# โปรแกรมคำนวณขนาดยา Paracetamol สำหรับเด็ก
+# Created by: Theprit
+# Date: March 2026
+
+def calculate_paracetamol_dose(weight_kg, age_years):
+    """
+    ฟังก์ชันคำนวณขนาดยา Paracetamol สำหรับเด็ก
+    
+    Parameters:
+    - weight_kg: น้ำหนักเด็ก (กิโลกรัม)
+    - age_years: อายุเด็ก (ปี)
+    
+    Returns:
+    - dictionary ที่มีข้อมูลขนาดยา
+    """
+    
+    # สูตรมาตรฐาน: 10-15 mg/kg/dose
+    min_dose_per_time = weight_kg * 10
+    max_dose_per_time = weight_kg * 15
+    
+    # ขนาดสูงสุดต่อวัน: 60 mg/kg/day
+    max_dose_per_day = weight_kg * 60
+    
+    # ความถี่ในการให้ยา: ทุก 4-6 ชั่วโมง (4-6 ครั้งต่อวัน)
+    min_frequency = 4
+    max_frequency = 6
+    
+    # สร้าง dictionary เก็บผลลัพธ์
+    result = {
+        "weight": weight_kg,
+        "age": age_years,
+        "min_dose": min_dose_per_time,
+        "max_dose": max_dose_per_time,
+        "max_daily": max_dose_per_day,
+        "frequency": f"{min_frequency}-{max_frequency} ครั้ง/วัน"
+    }
+    
+    return result
+
+
+def display_result(result):
+    """
+    ฟังก์ชันแสดงผลลัพธ์
+    """
+    print("\n" + "=" * 60)
+    print("ผลการคำนวณ")
+    print("=" * 60)
+    print(f"น้ำหนักเด็ก: {result['weight']} kg")
+    print(f"อายุเด็ก: {result['age']} ปี")
+    print()
+    print(f"💊 ขนาดยาต่อครั้ง: {result['min_dose']:.0f} - {result['max_dose']:.0f} mg")
+    print(f"⏰ ความถี่: {result['frequency']} (ทุก 4-6 ชั่วโมง)")
+    print(f"⚠️  ขนาดสูงสุดต่อวัน: {result['max_daily']:.0f} mg")
+    print()
+    print("⚠️  คำเตือน:")
+    print("   - ไม่ควรเกินขนาดสูงสุดต่อวัน")
+    print("   - ควรปรึกษาแพทย์หรือเภสัชกรก่อนใช้")
+    print("   - โปรแกรมนี้เป็นเพียงเครื่องมือคำนวณเบื้องต้น")
+    print("=" * 60)
+
+
+def main():
+    """
+    ฟังก์ชันหลักของโปรแกรม
+    """
+    print("=" * 60)
+    print("โปรแกรมคำนวณขนาดยา Paracetamol สำหรับเด็ก")
+    print("Pediatric Paracetamol Dosage Calculator")
+    print("=" * 60)
+    print()
+    
+    try:
+        # รับข้อมูลจากผู้ใช้
+        weight = float(input("กรุณาใส่น้ำหนักเด็ก (kg): "))
+        age = int(input("กรุณาใส่อายุเด็ก (ปี): "))
+        
+        # ตรวจสอบข้อมูล
+        if weight <= 0 or age <= 0:
+            print("\n❌ ข้อมูลไม่ถูกต้อง กรุณาใส่ค่าที่มากกว่า 0")
+            return
+        
+        if age >= 18:
+            print("\n⚠️  โปรแกรมนี้ออกแบบสำหรับเด็กอายุต่ำกว่า 18 ปี")
+            print("สำหรับผู้ใหญ่ควรปรึกษาแพทย์หรือเภสัชกร")
+            return
+        
+        # คำนวณขนาดยา
+        result = calculate_paracetamol_dose(weight, age)
+        
+        # แสดงผลลัพธ์
+        display_result(result)
+        
+    except ValueError:
+        print("\n❌ กรุณาใส่ตัวเลขเท่านั้น")
+    except Exception as e:
+        print(f"\n❌ เกิดข้อผิดพลาด: {e}")
+
+
+# เริ่มต้นโปรแกรม
+if __name__ == "__main__":
+    main()
